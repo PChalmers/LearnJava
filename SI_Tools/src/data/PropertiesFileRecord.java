@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -77,10 +78,10 @@ public class PropertiesFileRecord {
 	/**
 	 * @param properties
 	 */
-	public Map<String, Integer> getUniquePropertiesList() {
+	public Set<String> getUniquePropertiesList() {
 		// Print each line.
 		
-		Map<String, Integer> propertiyList = new HashMap<>();
+		Set<String> propertiyList = new HashSet<>();
 		
 		Iterator<String> filenameItr = fileData.keySet().iterator();
 		while (filenameItr.hasNext())
@@ -91,14 +92,7 @@ public class PropertiesFileRecord {
 			while (itr2.hasNext())
 			{
 				String field = itr2.next();
-				if(propertiyList.containsKey(field))
-				{
-					propertiyList.put(field, propertiyList.get(field)+1);
-				}
-				else
-				{
-					propertiyList.put(field, 1);
-				}
+				propertiyList.add(field);
 			}
 		}
 		return propertiyList;
