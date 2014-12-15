@@ -1,0 +1,91 @@
+<tests>
+  <platforms>
+    <aix-db2>aix-ppc64-7.1-DB2</aix-db2>
+    <aix-ora>aix-ppc64-7.1-oracle-11g</aix-ora>
+    <rhel-ora>rhel-x86_64-6.2-oracle-11g</rhel-ora>
+    <rhel-db2>rhel-x86_64-6.2-DB2</rhel-db2>
+    <sparc-ora>solaris-sparc64-2.10-oracle-11g</sparc-ora>
+    <solx86-ora>solaris-x86_64-2.10-oracle-11g</solx86-ora>
+  </platforms>
+
+  <streams>
+
+    <streams_smoke>
+    SI_SMOKETESTS
+    </streams_smoke>
+
+    <streams_man_aix_db2>
+      SI_SMOKETESTS,SI_AB,SI_ASBM,SI_ASEC,SI_BE_Runner,SI_BSRM_RUNNER,SI_CAPMGM_Basel,SI_CAPMGM_Recon,SI_CreditEconomicCapital
+    </streams_man_aix_db2>
+    <streams_man_aix_ora>
+      SI_SMOKETESTS,SI_CdtEcocap_Advanced
+    </streams_man_aix_ora>
+    <streams_man_rhel_db2>
+      SI_SMOKETESTS,SI_CAPMGM_Basel
+    </streams_man_rhel_db2>
+    <streams_man_rhel_ora>
+      SI_SMOKETESTS,SI_AB,SI_CAPMGM_Basel,SI_CAPMGM_Recon,SI_CdtEcocap_Advanced,SI_CreditEconomicCapital,SI_MarketCredit_Runner
+    </streams_man_rhel_ora>
+    <streams_man_sparc_ora>
+      SI_SMOKETESTS,SI_AB,SI_BE_Runner,SI_CdtEcocap_Advanced,SI_CreditEconomicCapital,SI_MarketCredit_Runner
+    </streams_man_sparc_ora>
+    <streams_man_solx86_ora>
+      SI_SMOKETESTS,SI_BSRM_CM_RUNNER,SI_CAPMGM_Basel,SI_CAPMGM_Recon,SI_CdtEcocap_Advanced,SI_MarketCredit_Runner
+    </streams_man_solx86_ora>
+
+    <streams_all>
+      SI_AB,SI_AB.ARA,SI_BSRM_RUNNER,SI_ASBM,SI_BSRM_CM_RUNNER,SI_ASEC,SI_BE_Runner,SI_MarketCredit_Runner,SI_CAPMGM_Basel,SI_CAPMGM_Recon,SI_ECOCAP_EXT,SI_CreditEconomicCapital,SI_CdtEcocap_Advanced
+    </streams_all>
+  </streams>
+
+  <run day="Manual">
+    <platform name="aix-db2">
+      <streams>streams_man_aix_db2
+      </streams>
+    </platform>
+    <platform name="aix-ora">
+      <streams>streams_man_aix_ora
+      </streams>
+    </platform>
+    <platform name="rhel-db2">
+      <streams>streams_man_rhel_db2
+      </streams>
+    </platform>
+    <platform name="rhel-ora">
+      <streams>streams_man_rhel_ora
+      </streams>
+    </platform>
+    <platform name="solx86-ora">
+      <streams>streams_man_solx86_ora
+      </streams>
+    </platform>
+    <platform name="sparc-ora">
+      <streams>streams_man_sparc_ora
+      </streams>
+    </platform>
+  </run>
+
+  <run day="Manual_smoke">
+    <platform name="aix-db2">
+      <streams>streams_smoke
+      </streams>
+    </platform>
+    <platform name="aix-ora">
+      <streams>streams_smoke
+      </streams>
+    </platform>
+    <platform name="rhel-ora">
+      <streams>streams_smoke
+      </streams>
+    </platform>
+    <platform name="solx86-ora">
+      <streams>streams_smoke
+      </streams>
+    </platform>
+    <platform name="sparc-ora">
+      <streams>streams_smoke
+      </streams>
+    </platform>
+  </run>
+</tests>
+  
