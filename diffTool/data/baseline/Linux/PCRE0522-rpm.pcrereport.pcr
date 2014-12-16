@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<PCREMTFDataSetManifest dataSetName="$ALGO_TOP/dynamic/pcre/PCRE0522-rpm.pcrereport" >
+  <GenerationInfo />
+  <MarketScenarioSetList>
+    <MarketScenarioSet name="Curve Shocks">
+      <Scenario name="Nominal" weight="0.1666666666666667"/>
+      <Scenario name="Parallel" weight="0.1666666666666667"/>
+      <Scenario name="Steepening" weight="0.1666666666666667"/>
+      <Scenario name="Flattening" weight="0.1666666666666667"/>
+      <Scenario name="Inverted" weight="0.1666666666666666"/>
+      <Scenario name="Base Scenario" weight="0.1666666666666667"/>
+    </MarketScenarioSet>
+  </MarketScenarioSetList>
+  <CreditScenarioSetList>
+    <CreditScenarioSet name="ALGOBATCH_GENERATED_Default No Default">
+      <Scenario name="No Default" weight="0.5"/>
+      <Scenario name="Default" weight="0.5"/>
+    </CreditScenarioSet>
+    <CreditScenarioSet name="Credit Derivative Counter Party Credit State Scenario Set">
+      <Scenario name="no default" weight="0.5"/>
+      <Scenario name="default" weight="0.5"/>
+    </CreditScenarioSet>
+  </CreditScenarioSetList>
+  <TimeLists>
+    <TimeList name="Exposure Time List">
+      <TimePoint value="1999/03/23 (50)"/>
+    </TimeList>
+  </TimeLists>
+  <ExpressionList>
+    <Expression type="exposure" label="@ActualExposure('discountae=none','lags=True','attribute=THEO/Value','netting=as modeled','discountdate=2004/10/21','useAdjFactor=False')" statistics="false">@ActualExposure('discountae=none','lags=True','attribute=THEO/Value','netting=as modeled','discountdate=2004/10/21','useAdjFactor=False')</Expression>
+  </ExpressionList>
+  <PCREMTFInstrumentFile path="$ALGO_TOP/dynamic/pcre/PCRE0522-rpm.pcrereport_instrument.idf" />
+  <PCREMTFBinaryDataCurrency>USD</PCREMTFBinaryDataCurrency>
+  <PCREMTFBinaryDataManifestList>
+    <PCREMTFBinaryDataManifest type="exposure" path="$ALGO_TOP/dynamic/pcre/PCRE0522-rpm.pcrereport_lac1_0_E-SE-CD-DND.xml" />
+    <PCREMTFBinaryDataManifest type="exposure" path="$ALGO_TOP/dynamic/pcre/PCRE0522-rpm.pcrereport_lac0_0_E-SE-DND.xml" />
+    <PCREMTFBinaryDataManifest type="exposure" path="$ALGO_TOP/dynamic/pcre/PCRE0522-rpm.pcrereport_lac0_1_E-SE-CD-DND.xml" />
+  </PCREMTFBinaryDataManifestList>
+</PCREMTFDataSetManifest>

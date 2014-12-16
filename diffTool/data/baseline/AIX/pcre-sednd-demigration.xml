@@ -1,0 +1,8 @@
+
+<result>
+<cube.se_dnd value="true"/>
+<cube.se_dnd_settlement value="true"/>
+<cube.se_migration value="false"/>
+<cube.de_dnd value="false"/>
+<cube.de_migration value="true"/>
+</result>

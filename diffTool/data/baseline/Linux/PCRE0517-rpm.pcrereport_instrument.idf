@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+
+<InstrumentDataFile>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP-=-Consolidated_pcre_sednd_demigration" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Dresdner CP-=-Consolidated_pcre_sednd_demigration" counterparty="Dresdner Bank" category="Node">
+  </Instrument>
+</InstrumentDataFile>
