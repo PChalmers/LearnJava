@@ -23,14 +23,14 @@ public class diffTool {
 	
 	private Set<String> baselineFilenames = new HashSet<>();
 	private Set<String> runtimeFilenames = new HashSet<>();
-	private BufferedWriter resultFileBufWrtr;
+	private BufferedWriter logFileBufWrtr;
 	
 	public diffTool()
 	{
 		FileWriter resultDesc;
 		try {
 			resultDesc = new FileWriter(OUTPUT_DIR + "results.log");
-			resultFileBufWrtr = new BufferedWriter(resultDesc);
+			logFileBufWrtr = new BufferedWriter(resultDesc);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,8 +41,8 @@ public class diffTool {
 	public void run() {
 
 		try {
-			FileWriter resultDesc = new FileWriter(OUTPUT_DIR + "results.log");
-			BufferedWriter resultFileBufWrtr = new BufferedWriter(resultDesc);
+//			FileWriter resultDesc = new FileWriter(OUTPUT_DIR + "results.log");
+//			BufferedWriter logFileBufWrtr = new BufferedWriter(resultDesc);
 
 			cleanUpTemDirs();
 
@@ -59,7 +59,7 @@ public class diffTool {
 				if (!baselineFilenames.contains(file)) {
 					System.out.println("runtime file " + file
 							+ " does not exist in the baseline");
-					resultFileBufWrtr.write("runtime file " + file
+					logFileBufWrtr.write("runtime file " + file
 							+ " does not exist in the baseline\n");
 				}
 			}
@@ -73,16 +73,18 @@ public class diffTool {
 				} else {
 					System.out.println("baseline file " + file
 							+ " does not exist in the runtime output");
-					resultFileBufWrtr.write("baseline file " + file
+					logFileBufWrtr.write("baseline file " + file
 							+ " does not exist in the runtime output\n");
 				}
 			}
-
-			resultFileBufWrtr.close();
+			logFileBufWrtr.close();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		}
+
 	}
 	
 	private Boolean cleanUpTemDirs() {
@@ -141,13 +143,13 @@ public class diffTool {
 					{
 						System.out.println("Compare failed for " + BASELINE_TEMP_DIR + filename + 
 								           " and " + RUNTIME_TEMP_DIR + filename + "\n");
-						resultFileBufWrtr.write("Compare failed for " + BASELINE_TEMP_DIR + filename + 
+						logFileBufWrtr.write("Compare failed for " + BASELINE_TEMP_DIR + filename + 
 						           " and " + RUNTIME_TEMP_DIR + filename + "\n");
 					}
 					else
 					{
 						System.out.println("The order for file passed\n");
-						resultFileBufWrtr.write("The order for file passed\n");
+						logFileBufWrtr.write("The order for file passed\n");
 					}
 				}
 			}
@@ -204,6 +206,7 @@ public class diffTool {
 	        	filenames.add(fileEntry.getName());
 	        }
 	    }
+	    
 	    return filenames;
 	}
 	
