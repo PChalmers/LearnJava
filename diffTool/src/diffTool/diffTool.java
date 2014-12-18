@@ -36,7 +36,6 @@ public class diffTool {
 			e.printStackTrace();
 		}
 	}
-	
 
 	public void run() {
 
@@ -57,9 +56,9 @@ public class diffTool {
 			while (rtItr.hasNext()) {
 				String file = rtItr.next();
 				if (!baselineFilenames.contains(file)) {
-					System.out.println("runtime file " + file
+					System.out.println("** runtime file " + file
 							+ " does not exist in the baseline");
-					logFileBufWrtr.write("runtime file " + file
+					logFileBufWrtr.write("** runtime file " + file
 							+ " does not exist in the baseline\n");
 				}
 			}
@@ -71,9 +70,9 @@ public class diffTool {
 				if (runtimeFilenames.contains(file)) {
 					compareFiles(BASELINE_DIR, RUNTIME_DIR, file);
 				} else {
-					System.out.println("baseline file " + file
+					System.out.println("** baseline file " + file
 							+ " does not exist in the runtime output");
-					logFileBufWrtr.write("baseline file " + file
+					logFileBufWrtr.write("** baseline file " + file
 							+ " does not exist in the runtime output\n");
 				}
 			}
@@ -82,9 +81,7 @@ public class diffTool {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			
 		}
-
 	}
 	
 	private Boolean cleanUpTemDirs() {
@@ -138,20 +135,27 @@ public class diffTool {
 				if(createSortedTempFile(BASELINE_TEMP_DIR, filename, file1List) 
 						&& createSortedTempFile(RUNTIME_TEMP_DIR, filename, file2List))
 				{
-					System.out.println("\nChecking the content order for file " + filename);
+					System.out.println("\n" + filename + "Failed first content check. Checking for lines out of order");
+					logFileBufWrtr.write("\n" + filename + "Failed first content check. Checking for lines out of order");
 					if(!CompareDataInFiles.compareData(OUTPUT_DIR, BASELINE_TEMP_DIR, RUNTIME_TEMP_DIR, filename))
 					{
-						System.out.println("Compare failed for " + BASELINE_TEMP_DIR + filename + 
+						System.out.println("  - Content check failed for " + BASELINE_TEMP_DIR + filename + 
 								           " and " + RUNTIME_TEMP_DIR + filename + "\n");
-						logFileBufWrtr.write("Compare failed for " + BASELINE_TEMP_DIR + filename + 
+						logFileBufWrtr.write("  - Content check failed for " + BASELINE_TEMP_DIR + filename + 
 						           " and " + RUNTIME_TEMP_DIR + filename + "\n");
 					}
 					else
 					{
-						System.out.println("The order for file passed\n");
-						logFileBufWrtr.write("The order for file passed\n");
+						System.out.println("  - The order for file passed\n");
+						logFileBufWrtr.write("  - The order for file passed\n");
 					}
 				}
+				
+			}
+			else
+			{
+				System.out.println("The diff check of the file " + filename + " passed");
+				logFileBufWrtr.write("The diff check of the file " + filename + " passed");
 			}
 			
 		} catch (IOException e) {
