@@ -3,9 +3,7 @@ package diffTool;
 import java.io.*;
 
 public class CompareDataInFiles {
-	
-	
-	
+
 	public static boolean compareData(String output_dir, String baselinePath, String runtimePath, String filename)
 	{
 		// File names to Read & Write.
@@ -61,18 +59,14 @@ public class CompareDataInFiles {
 						     +   " - File 1:" + actlFileContent
 							 + "\n - File 2:" + expctdFileContent + "\n");
 							isSame = false;
-							System.out.println("false1");
 						}
 						lineNumber = lineNumber + 1;
 						expctdFileContent = expcFileBufRdr.readLine();
 					} else {
-						stringBuffer.append("Difference in Line "
-								+ lineNumber + " :- Actual File contains :\n"
-								+ actlFileContent
-								+ "\nExpected File Contains - \n"
-								+ expctdFileContent);
+						stringBuffer.append("Line " + lineNumber + "\n" 
+							     +   " - File 1:" + actlFileContent
+								 + "\n - File 2:" + expctdFileContent + "\n");
 						isSame = false;
-						System.out.println("false2");
 						lineNumber = lineNumber + 1;
 					}
 					actlFileContent = actlFileBufRdr.readLine();
@@ -81,13 +75,10 @@ public class CompareDataInFiles {
 				// Check for the condition : if Actual File has Data & Expected
 				// File doesn't contain data.
 				while ((expctdFileContent != null) && (actlFileContent == null)) {
-					stringBuffer.append("Difference in Line " + lineNumber
-									+ " :- Actual File contains :\n"
-									+ actlFileContent
-									+ "\nExpected File Contains - \n"
-									+ expctdFileContent);
+					stringBuffer.append("Line " + lineNumber + "\n" 
+						     +   " - File 1:" + actlFileContent
+							 + "\n - File 2:" + expctdFileContent + "\n");
 					isSame = false;
-					System.out.println("false3");
 					lineNumber = lineNumber + 1;
 					expctdFileContent = expcFileBufRdr.readLine();
 				}
