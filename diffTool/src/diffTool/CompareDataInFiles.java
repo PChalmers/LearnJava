@@ -27,7 +27,11 @@ public class CompareDataInFiles {
 			{
 				System.out.println(expectedFile + " does not exist");
 				return false;
-			}			
+			}
+			
+			StringBuffer stringBuffer = new StringBuffer();
+			stringBuffer.append("File 1 - " + actualFile + "\n");
+			stringBuffer.append("File 2 - " + expectedFile + "\n\n");
 			// Create FileReader & Writer Objects.
 			FileReader actualFileReader = new FileReader(actualFile);
 			FileReader expctdFileReader = new FileReader(expectedFile);
@@ -35,9 +39,7 @@ public class CompareDataInFiles {
 			// Create Buffered Object.
 			BufferedReader actlFileBufRdr = new BufferedReader(actualFileReader);
 			BufferedReader expcFileBufRdr = new BufferedReader(expctdFileReader);
-			
-			String stringBuffer = "---------START----------";
-			
+
 			// Get the file contents into String Variables.
 			String actlFileContent = actlFileBufRdr.readLine();
 			String expctdFileContent = expcFileBufRdr.readLine();
@@ -50,27 +52,27 @@ public class CompareDataInFiles {
 				while ((actlFileContent != null)) {
 
 					// Check whether Expected file contains data or not
-					if (((expctdFileContent) != null)) {
+					if ((expctdFileContent) != null) {
 
 						// Check whether both the files have same data in the
 						// lines
 						if (!actlFileContent.equals(expctdFileContent)) {
-							stringBuffer.concat("Difference in Line "
-									+ lineNumber + " :- Actual File contains :\n"
-									+ actlFileContent
-									+ "\nExpected File Contains : \n"
-									+ expctdFileContent);
+							stringBuffer.append("Line " + lineNumber + "\n" 
+						     +   " - File 1:" + actlFileContent
+							 + "\n - File 2:" + expctdFileContent + "\n");
 							isSame = false;
+							System.out.println("false1");
 						}
 						lineNumber = lineNumber + 1;
 						expctdFileContent = expcFileBufRdr.readLine();
 					} else {
-						stringBuffer.concat("Difference in Line "
+						stringBuffer.append("Difference in Line "
 								+ lineNumber + " :- Actual File contains :\n"
 								+ actlFileContent
 								+ "\nExpected File Contains - \n"
 								+ expctdFileContent);
 						isSame = false;
+						System.out.println("false2");
 						lineNumber = lineNumber + 1;
 					}
 					actlFileContent = actlFileBufRdr.readLine();
@@ -79,30 +81,30 @@ public class CompareDataInFiles {
 				// Check for the condition : if Actual File has Data & Expected
 				// File doesn't contain data.
 				while ((expctdFileContent != null) && (actlFileContent == null)) {
-					stringBuffer.concat("Difference in Line " + lineNumber
+					stringBuffer.append("Difference in Line " + lineNumber
 									+ " :- Actual File contains :\n"
 									+ actlFileContent
 									+ "\nExpected File Contains - \n"
 									+ expctdFileContent);
 					isSame = false;
+					System.out.println("false3");
 					lineNumber = lineNumber + 1;
 					expctdFileContent = expcFileBufRdr.readLine();
 				}
 			} else {
 				// Mention that both the files don't have Data.
-				stringBuffer.concat("Difference in Line " + lineNumber
+				stringBuffer.append("Difference in Line " + lineNumber
 						+ " :- Actual File contains :\n" + actlFileContent
 						+ "\nExpected File Contains - \n" + expctdFileContent);
 				isSame = false;
+				System.out.println("false4");
 			}
 
 			// Check is there any difference or not.
-			String endOfComparision = "-----------END----------";
 			if (!isSame) {
-				stringBuffer.concat(endOfComparision);
 				FileWriter resultDesc = new FileWriter(descptnFile);
 				BufferedWriter resultFileBufWrtr = new BufferedWriter(resultDesc);
-				resultFileBufWrtr.write(stringBuffer);
+				resultFileBufWrtr.write(stringBuffer.toString());
 				resultFileBufWrtr.newLine();
 				resultFileBufWrtr.close();
 			}

@@ -15,8 +15,9 @@ import java.util.Set;
 
 public class diffTool {
 
-	private String BASELINE_DIR = "data/baseline/SunOS/";
-	private String RUNTIME_DIR = "data/runtime/sunos/export/";
+	private String BASELINE_DIR = "data/baseline/Linux/";
+	private String RUNTIME_DIR = "data/runtime/rhel/export/";
+	
 	private String BASELINE_TEMP_DIR = "temp_baseline/";
 	private String RUNTIME_TEMP_DIR = "temp_runtime/";
 	private String OUTPUT_DIR = "output/";
@@ -127,16 +128,20 @@ public class diffTool {
 		
 		try {
 			
+			// Check if original files match
 			if(!CompareDataInFiles.compareData(OUTPUT_DIR, baselinePath, runtimePath, filename))
 			{
 				List<String> file1List = extractFileContents(baselinePath + filename);
 				List<String> file2List = extractFileContents(runtimePath + filename);
 				
+				// Sort the original files to check for matching content 
 				if(createSortedTempFile(BASELINE_TEMP_DIR, filename, file1List) 
 						&& createSortedTempFile(RUNTIME_TEMP_DIR, filename, file2List))
 				{
-					System.out.println("\n" + filename + "Failed first content check. Checking for lines out of order");
-					logFileBufWrtr.write("\n" + filename + "Failed first content check. Checking for lines out of order");
+					System.out.println("\n" + filename + " - Failed first content check. Checking for lines out of order");
+					logFileBufWrtr.write("\n" + filename + " - Failed first content check. Checking for lines out of order");
+					
+					// Check if files with sorted content match
 					if(!CompareDataInFiles.compareData(OUTPUT_DIR, BASELINE_TEMP_DIR, RUNTIME_TEMP_DIR, filename))
 					{
 						System.out.println("  - Content check failed for " + BASELINE_TEMP_DIR + filename + 
@@ -146,23 +151,21 @@ public class diffTool {
 					}
 					else
 					{
-						System.out.println("  - The order for file passed\n");
-						logFileBufWrtr.write("  - The order for file passed\n");
+						System.out.println("  - The contents of the sorted files match\n");
+						logFileBufWrtr.write("  - The contents of the sorted files match\n");
 					}
 				}
-				
 			}
 			else
 			{
-				System.out.println("The diff check of the file " + filename + " passed");
-				logFileBufWrtr.write("The diff check of the file " + filename + " passed");
+//				// Original files match so done 
+				System.out.println("The diff check of the original files " + filename + " passed");
+				logFileBufWrtr.write("The diff check of the original files " + filename + " passed");
 			}
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 
 	private Boolean createSortedTempFile(String path, String filename, List<String> fileList) {
@@ -188,7 +191,6 @@ public class diffTool {
 	
 	
 	private List<String> extractFileContents(String file) throws IOException {
-		// TODO Auto-generated method stub
 		
 		FileReader fileReader = new FileReader(file);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -215,10 +217,13 @@ public class diffTool {
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		
 		try {
 
+			
+			
+			
+			
 			diffTool obj = new diffTool();
 			obj.run();
 		} catch (Exception e) {
