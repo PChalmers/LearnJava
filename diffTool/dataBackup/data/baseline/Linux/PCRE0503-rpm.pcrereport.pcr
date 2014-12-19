@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<PCREMTFDataSetManifest dataSetName="$ALGO_TOP/dynamic/pcre/PCRE0503-rpm.pcrereport" >
+  <GenerationInfo />
+  <MarketScenarioSetList>
+    <MarketScenarioSet name="iter scenario set">
+      <Scenario name="Nominal Scenario" weight="0.0"/>
+      <Scenario name="Base Scenario" weight="0.0526315789473684"/>
+      <Scenario name="mc2" weight="0.0526315789473684"/>
+      <Scenario name="mc3" weight="0.0526315789473684"/>
+      <Scenario name="mc4" weight="0.0526315789473684"/>
+      <Scenario name="mc5" weight="0.0526315789473684"/>
+      <Scenario name="mc6" weight="0.0526315789473684"/>
+      <Scenario name="mc7" weight="0.0526315789473684"/>
+      <Scenario name="mc8" weight="0.0526315789473684"/>
+      <Scenario name="mc9" weight="0.0526315789473684"/>
+      <Scenario name="mc10" weight="0.0526315789473684"/>
+      <Scenario name="mc11" weight="0.0526315789473684"/>
+      <Scenario name="mc12" weight="0.0526315789473684"/>
+      <Scenario name="mc13" weight="0.0526315789473684"/>
+      <Scenario name="mc14" weight="0.0526315789473684"/>
+      <Scenario name="mc15" weight="0.0526315789473684"/>
+      <Scenario name="mc16" weight="0.0526315789473684"/>
+      <Scenario name="mc17" weight="0.0526315789473684"/>
+      <Scenario name="mc18" weight="0.0526315789473684"/>
+      <Scenario name="mc19" weight="0.0526315789473684"/>
+    </MarketScenarioSet>
+    <MarketScenarioSet name="Market-Auto Generated">
+      <Scenario name="Null" weight="1.0"/>
+    </MarketScenarioSet>
+  </MarketScenarioSetList>
+  <CreditScenarioSetList>
+    <CreditScenarioSet name="PCREMTF Internally Generated Credit Scenario Set">
+      <Scenario name="no default" weight="0.5"/>
+      <Scenario name="default" weight="0.5"/>
+    </CreditScenarioSet>
+    <CreditScenarioSet name="Credit Derivative Counter Party Credit State Scenario Set">
+      <Scenario name="no default" weight="0.5"/>
+      <Scenario name="default" weight="0.5"/>
+    </CreditScenarioSet>
+    <CreditScenarioSet name="ALGOBATCH_GENERATED_Full Migration">
+      <Scenario name="AAA" weight="0.1428571428571429"/>
+      <Scenario name="AA" weight="0.1428571428571429"/>
+      <Scenario name="A" weight="0.1428571428571429"/>
+      <Scenario name="BBB" weight="0.1428571428571429"/>
+      <Scenario name="BB" weight="0.1428571428571429"/>
+      <Scenario name="B" weight="0.1428571428571429"/>
+      <Scenario name="Default" weight="0.1428571428571429"/>
+    </CreditScenarioSet>
+  </CreditScenarioSetList>
+  <TimeLists>
+    <TimeList name="Exposure Time List">
+      <TimePoint value="1999/03/13 (40)"/>
+      <TimePoint value="1999/05/02 (90)"/>
+      <TimePoint value="1999/06/21 (140)"/>
+      <TimePoint value="1999/07/31 (180)"/>
+    </TimeList>
+  </TimeLists>
+  <ExpressionList>
+    <Expression type="exposure" label="@Timeweight('buckets=(0,40),(40,90),(90,140),(140,180)')@ActualExposure('discountae=none','lags=True','attribute=THEO/Value','netting=as modeled','discountdate=2004/10/21','useAdjFactor=False')" statistics="false">@Timeweight('buckets=(0,40),(40,90),(90,140),(140,180)')@ActualExposure('discountae=none','lags=True','attribute=THEO/Value','netting=as modeled','discountdate=2004/10/21','useAdjFactor=False')</Expression>
+  </ExpressionList>
+  <PCREMTFInstrumentFile path="$ALGO_TOP/dynamic/pcre/PCRE0503-rpm.pcrereport_instrument.idf" />
+  <PCREMTFBinaryDataCurrency>USD</PCREMTFBinaryDataCurrency>
+  <PCREMTFBinaryDataManifestList>
+    <PCREMTFBinaryDataManifest type="exposure" path="$ALGO_TOP/dynamic/pcre/PCRE0503-rpm.pcrereport_lac1_0_E-DE-DND.xml" />
+    <PCREMTFBinaryDataManifest type="exposure" path="$ALGO_TOP/dynamic/pcre/PCRE0503-rpm.pcrereport_lac1_1_E-SE-DND.xml" />
+    <PCREMTFBinaryDataManifest type="exposure" path="$ALGO_TOP/dynamic/pcre/PCRE0503-rpm.pcrereport_lac1_2_E-SE-Migration1.xml" />
+    <PCREMTFBinaryDataManifest type="exposure" path="$ALGO_TOP/dynamic/pcre/PCRE0503-rpm.pcrereport_lac0_0_E-SE-DND.xml" />
+    <PCREMTFBinaryDataManifest type="exposure" path="$ALGO_TOP/dynamic/pcre/PCRE0503-rpm.pcrereport_lac0_1_E-SE-Migration1.xml" />
+    <PCREMTFBinaryDataManifest type="exposure" path="$ALGO_TOP/dynamic/pcre/PCRE0503-rpm.pcrereport_lac0_2_E-SE-CD-Migration1.xml" />
+  </PCREMTFBinaryDataManifestList>
+</PCREMTFDataSetManifest>

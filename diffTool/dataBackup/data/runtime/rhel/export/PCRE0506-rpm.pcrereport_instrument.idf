@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+
+<InstrumentDataFile>
+  <Instrument id="Desk1 Tor-TRS-Bell 6.15% 15/06/09" counterparty="Dresdner Bank" category="CreditDerivative">
+    <Attribute tag="Issuer Name" value="Bell Canada"/>
+    <Attribute tag="Issuer Recovery Rate" value="0.2000"/>
+  </Instrument>
+</InstrumentDataFile>

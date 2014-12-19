@@ -1,0 +1,28 @@
+
+<result>
+<cube.se_dnd value="true"/>
+<cube.se_dnd_settlement value="true"/>
+<cube.se_migration value="true"/>
+<cube.de_dnd value="true"/>
+<cube.de_migration value="true"/>
+<SE_DND precision="Single"/>
+<SE_DND trimExpiredTimesteps="true"/>
+<SE_DND nominal.precision="Single"/>
+<SE_DND nominal.trimExpiredTimesteps="N/A"/>
+<SE_DND-Settlement precision="Single"/>
+<SE_DND-Settlement trimExpiredTimesteps="true"/>
+<SE_DND-Settlement nominal.precision="Single"/>
+<SE_DND-Settlement nominal.trimExpiredTimesteps="N/A"/>
+<DE_DND precision="Single"/>
+<DE_DND trimExpiredTimesteps="true"/>
+<DE_DND nominal.precision="Single"/>
+<DE_DND nominal.trimExpiredTimesteps="N/A"/>
+<SE_Migration precision="Single"/>
+<SE_Migration trimExpiredTimesteps="true"/>
+<SE_Migration nominal.precision="Single"/>
+<SE_Migration nominal.trimExpiredTimesteps="N/A"/>
+<DE_Migration precision="Single"/>
+<DE_Migration trimExpiredTimesteps="true"/>
+<DE_Migration nominal.precision="Single"/>
+<DE_Migration nominal.trimExpiredTimesteps="N/A"/>
+</result>

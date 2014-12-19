@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+
+<InstrumentDataFile>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP-=-Consolidated_pcre_allcompositesimulator" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Bell Canada Corp-=-Consolidated_pcre_allcompositesimulator" counterparty="Bell Canada" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Dresdner CP-=-Consolidated_pcre_allcompositesimulator" counterparty="Dresdner Bank" category="Node">
+  </Instrument>
+  <Instrument id="Desk1 Tor-DS - Bell 7% 24/09/27" counterparty="CitiBank" category="CreditDerivative">
+    <Attribute tag="Issuer Name" value="Bell Canada"/>
+    <Attribute tag="Issuer Recovery Rate" value="0.3000"/>
+  </Instrument>
+  <Instrument id="Desk1 Tor-TRS-Bell 6.15% 15/06/09" counterparty="Dresdner Bank" category="CreditDerivative">
+    <Attribute tag="Issuer Name" value="Bell Canada"/>
+    <Attribute tag="Issuer Recovery Rate" value="0.2000"/>
+  </Instrument>
+</InstrumentDataFile>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+
+<InstrumentDataFile>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP-=-Consolidated_pcre_allomssimulator" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Bell Canada Corp-=-Consolidated_pcre_allomssimulator" counterparty="Bell Canada" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Dresdner CP-=-Consolidated_pcre_allomssimulator" counterparty="Dresdner Bank" category="Node">
+  </Instrument>
+</InstrumentDataFile>

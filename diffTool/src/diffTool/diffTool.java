@@ -38,7 +38,7 @@ public class diffTool {
 	public diffTool() {
 		FileWriter resultDesc;
 		try {
-			resultDesc = new FileWriter(OUTPUT_DIR + "results.log");
+			resultDesc = new FileWriter("results.log");
 			logFileBufWrtr = new BufferedWriter(resultDesc);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -53,6 +53,8 @@ public class diffTool {
 		if(!outputDir.equals(""))
 		{
 			OUTPUT_DIR = outputDir;
+			BASELINE_TEMP_DIR = OUTPUT_DIR + "temp_baseline/";
+			RUNTIME_TEMP_DIR = OUTPUT_DIR + "temp_runtime/";
 		}
 			
 		
@@ -305,7 +307,7 @@ public class diffTool {
 			// has the build file argument been passed?
 			if (cmd.hasOption("o")) {
 				// Initialize the member variable
-				outputDir = cmd.getOptionValue("r");
+				outputDir = cmd.getOptionValue("o");
 				System.out.println("Output Dir = " + outputDir);
 			}
 

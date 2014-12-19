@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<PCREMTFDataSetManifest dataSetName="$ALGO_TOP/dynamic/pcre/PCRE0508-rpm.pcrereport" >
+  <GenerationInfo />
+  <MarketScenarioSetList>
+    <MarketScenarioSet name="Market-Auto Generated">
+      <Scenario name="Null" weight="1.0"/>
+    </MarketScenarioSet>
+  </MarketScenarioSetList>
+  <CreditScenarioSetList>
+    <CreditScenarioSet name="PCREMTF Internally Generated Credit Scenario Set">
+      <Scenario name="no default" weight="0.5"/>
+      <Scenario name="default" weight="0.5"/>
+    </CreditScenarioSet>
+  </CreditScenarioSetList>
+  <TimeLists>
+    <TimeList name="Exposure Time List">
+      <TimePoint value="1999/03/23 (50)"/>
+    </TimeList>
+  </TimeLists>
+  <ExpressionList>
+    <Expression type="exposure" label="@ActualExposure('discountae=none','lags=True','attribute=THEO/Value','netting=as modeled','discountdate=2004/10/21','useAdjFactor=False')" statistics="false">@ActualExposure('discountae=none','lags=True','attribute=THEO/Value','netting=as modeled','discountdate=2004/10/21','useAdjFactor=False')</Expression>
+  </ExpressionList>
+  <PCREMTFInstrumentFile path="$ALGO_TOP/dynamic/pcre/PCRE0508-rpm.pcrereport_instrument.idf" />
+  <PCREMTFBinaryDataCurrency>USD</PCREMTFBinaryDataCurrency>
+  <PCREMTFBinaryDataManifestList>
+    <PCREMTFBinaryDataManifest type="exposure" path="$ALGO_TOP/dynamic/pcre/PCRE0508-rpm.pcrereport_lac0_0_E-DE-DND.xml" />
+  </PCREMTFBinaryDataManifestList>
+</PCREMTFDataSetManifest>

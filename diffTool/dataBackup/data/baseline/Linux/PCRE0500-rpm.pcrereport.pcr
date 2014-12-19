@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<PCREMTFDataSetManifest dataSetName="$ALGO_TOP/dynamic/pcre/PCRE0500-rpm.pcrereport" >
+  <GenerationInfo />
+  <MarketScenarioSetList>
+    <MarketScenarioSet name="Market-Auto Generated">
+      <Scenario name="Null" weight="1.0"/>
+    </MarketScenarioSet>
+  </MarketScenarioSetList>
+  <CreditScenarioSetList>
+    <CreditScenarioSet name="PCREMTF Internally Generated Credit Scenario Set">
+      <Scenario name="no default" weight="0.5"/>
+      <Scenario name="default" weight="0.5"/>
+    </CreditScenarioSet>
+    <CreditScenarioSet name="Credit Derivative Counter Party Credit State Scenario Set">
+      <Scenario name="no default" weight="0.5"/>
+      <Scenario name="default" weight="0.5"/>
+    </CreditScenarioSet>
+    <CreditScenarioSet name="ALGOBATCH_GENERATED_Full Migration">
+      <Scenario name="AAA" weight="0.1428571428571429"/>
+      <Scenario name="AA" weight="0.1428571428571429"/>
+      <Scenario name="A" weight="0.1428571428571429"/>
+      <Scenario name="BBB" weight="0.1428571428571429"/>
+      <Scenario name="BB" weight="0.1428571428571429"/>
+      <Scenario name="B" weight="0.1428571428571429"/>
+      <Scenario name="Default" weight="0.1428571428571429"/>
+    </CreditScenarioSet>
+  </CreditScenarioSetList>
+  <TimeLists>
+    <TimeList name="Exposure Time List">
+      <TimePoint value="1999/02/11 (10)"/>
+      <TimePoint value="1999/03/13 (40)"/>
+      <TimePoint value="1999/03/23 (50)"/>
+      <TimePoint value="1999/04/12 (70)"/>
+    </TimeList>
+    <TimeList name="Value Time List">
+      <TimePoint value="1999/02/01 (0)"/>
+      <TimePoint value="1999/02/11 (10)"/>
+      <TimePoint value="1999/03/13 (40)"/>
+      <TimePoint value="1999/03/23 (50)"/>
+      <TimePoint value="1999/04/12 (70)"/>
+    </TimeList>
+  </TimeLists>
+  <ExpressionList>
+    <Expression type="exposure" label="@Timeweight('buckets=(0,10),(10,40),(40,50),(50,70)')@Mean()@ActualExposure('discountae=none','lags=True','attribute=THEO/Value','netting=as modeled','discountdate=2004/10/21','useAdjFactor=False')" statistics="true">@Timeweight('buckets=(0,10),(10,40),(40,50),(50,70)')@Mean()@ActualExposure('discountae=none','lags=True','attribute=THEO/Value','netting=as modeled','discountdate=2004/10/21','useAdjFactor=False')</Expression>
+    <Expression type="value" label="@Timeweight('buckets=(0,10),(10,40),(40,50),(50,70)')@Mean()@MonetarySum()" statistics="true">@Timeweight('buckets=(0,10),(10,40),(40,50),(50,70)')@Mean()@MonetarySum()</Expression>
+  </ExpressionList>
+  <PCREMTFInstrumentFile path="$ALGO_TOP/dynamic/pcre/PCRE0500-rpm.pcrereport_instrument.idf" />
+  <PCREMTFBinaryDataCurrency>USD</PCREMTFBinaryDataCurrency>
+  <PCREMTFBinaryDataManifestList>
+    <PCREMTFBinaryDataManifest type="exposure" path="$ALGO_TOP/dynamic/pcre/PCRE0500-rpm.pcrereport_lac0_0_E-DE-Migration1.xml" />
+    <PCREMTFBinaryDataManifest type="exposure" path="$ALGO_TOP/dynamic/pcre/PCRE0500-rpm.pcrereport_lac0_1_E-DE-CD-Migration1.xml" />
+    <PCREMTFBinaryDataManifest type="value" path="$ALGO_TOP/dynamic/pcre/PCRE0500-rpm.pcrereport_lac1_0_V-DE-DND.xml" />
+    <PCREMTFBinaryDataManifest type="value" path="$ALGO_TOP/dynamic/pcre/PCRE0500-rpm.pcrereport_lac1_1_V-DE-Migration1.xml" />
+    <PCREMTFBinaryDataManifest type="value" path="$ALGO_TOP/dynamic/pcre/PCRE0500-rpm.pcrereport_lac1_2_V-DE-CD-Migration1.xml" />
+  </PCREMTFBinaryDataManifestList>
+</PCREMTFDataSetManifest>

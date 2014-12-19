@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+
+<InstrumentDataFile>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Bonds-=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Swaps*&gt;CitiBank United Kingdom (Swaps)*&gt;Deal IDs-Receiver EUR 6.25%-=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Swaps*&gt;CitiBank United Kingdom (Swaps)*&gt;Deal IDs-Payer EUR 4.5%-=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Swaps*&gt;CitiBank United Kingdom (Swaps)*&gt;Deal IDs-IRSwap GBP 8% 97/6/30-=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Swaps*&gt;CitiBank United Kingdom (Swaps)*&gt;Deal IDs-IRSwap GBP 5% 97/6/30-=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Swaps*&gt;CitiBank United Kingdom (Swaps)*&gt;Deal IDs-Payer EUR 5.65%-=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Swaps*&gt;CitiBank Ger-Can (Swaps)*&gt;CitiBank Germany (Swaps)*&gt;Deal IDs-Receiver EUR 4.75%-=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Swaps*&gt;CitiBank Ger-Can (Swaps)*&gt;CitiBank Germany (Swaps)*&gt;Deal IDs--=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Swaps*&gt;CitiBank Ger-Can (Swaps)*&gt;CitiBank Germany (Swaps)*&gt;Deal IDs-Payer EUR 5.75%-=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Swaps*&gt;CitiBank Ger-Can (Swaps)*&gt;CitiBank Canada (Swaps)*&gt;Deal IDs-Payer EUR 6.75%-=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Swaps*&gt;CitiBank Ger-Can (Swaps)*&gt;CitiBank Canada (Swaps)*&gt;Deal IDs-Payer EUR 5%-=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Swaps*&gt;CitiBank Ger-Can (Swaps)*&gt;CitiBank Canada (Swaps)*&gt;Deal IDs-Receiver EUR 5.5%-=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Swaps*&gt;CitiBank Ger-Can (Swaps)*&gt;CitiBank Canada (Swaps)*&gt;Deal IDs-Receiver EUR 6.875%-=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Swaps*&gt;CitiBank Ger-Can (Swaps)*&gt;CitiBank Canada (Swaps)*&gt;Deal IDs--=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Options*&gt;CitiBank Singapore (Options)-=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Options*&gt;CitiBank Ger-UK (Options)*&gt;CitiBank United Kingdom (Options)-=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;CitiBank CP*&gt;NA-Options*&gt;CitiBank Ger-UK (Options)*&gt;CitiBank Germany (Options)-=-Consolidated_pcre_alltriggcalltwoses" counterparty="CitiBank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Bell Canada Corp*&gt;Operations Financing-=-Consolidated_pcre_alltriggcalltwoses" counterparty="Bell Canada" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Bell Canada Corp*&gt;Investment Financing-=-Consolidated_pcre_alltriggcalltwoses" counterparty="Bell Canada" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Dresdner CP*&gt;Dresdner Singapore*&gt;Deal IDs--=-Consolidated_pcre_alltriggcalltwoses" counterparty="Dresdner Bank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Dresdner CP*&gt;Dresdner Singapore*&gt;Deal IDs-FXSwap USD/CHF 95/3/30-=-Consolidated_pcre_alltriggcalltwoses" counterparty="Dresdner Bank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Dresdner CP*&gt;Dresdner Singapore*&gt;Deal IDs-FXSwap USD/CHF 96/5/10-=-Consolidated_pcre_alltriggcalltwoses" counterparty="Dresdner Bank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Dresdner CP*&gt;Dresdner United Kingdom*&gt;Deal IDs--=-Consolidated_pcre_alltriggcalltwoses" counterparty="Dresdner Bank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Dresdner CP*&gt;Dresdner United Kingdom*&gt;Deal IDs-FXSwap DEM/CHF 96/6/1-=-Consolidated_pcre_alltriggcalltwoses" counterparty="Dresdner Bank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Dresdner CP*&gt;Dresdner United Kingdom*&gt;Deal IDs-FXSwap DEM/CHF 97/6/15-=-Consolidated_pcre_alltriggcalltwoses" counterparty="Dresdner Bank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Dresdner CP*&gt;Dresdner Germany*&gt;Deal IDs--=-Consolidated_pcre_alltriggcalltwoses" counterparty="Dresdner Bank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Dresdner CP*&gt;Dresdner Canada*&gt;Deal IDs--=-Consolidated_pcre_alltriggcalltwoses" counterparty="Dresdner Bank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Dresdner CP*&gt;Dresdner USA*&gt;Deal IDs--=-Consolidated_pcre_alltriggcalltwoses" counterparty="Dresdner Bank" category="Node">
+  </Instrument>
+  <Instrument id="&gt;&gt;Overall*&gt;Dresdner CP*&gt;Dresdner Japan*&gt;Deals IDs--=-Consolidated_pcre_alltriggcalltwoses" counterparty="Dresdner Bank" category="Node">
+  </Instrument>
+  <Instrument id="Desk1 Tor-DS - Bell 7% 24/09/27" counterparty="CitiBank" category="CreditDerivative">
+    <Attribute tag="Issuer Name" value="Bell Canada"/>
+    <Attribute tag="Issuer Recovery Rate" value="0.3000"/>
+  </Instrument>
+  <Instrument id="Desk1 Tor-TRS-Bell 6.15% 15/06/09" counterparty="Dresdner Bank" category="CreditDerivative">
+    <Attribute tag="Issuer Name" value="Bell Canada"/>
+    <Attribute tag="Issuer Recovery Rate" value="0.2000"/>
+  </Instrument>
+</InstrumentDataFile>
