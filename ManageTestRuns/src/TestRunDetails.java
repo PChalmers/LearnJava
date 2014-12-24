@@ -1,4 +1,7 @@
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,62 +27,38 @@ public class TestRunDetails {
 	public static String RUN = "run";
 		
 	// Private class methods
-	private Map<String, String> platforms;
-	private Map<String, Map<String, String>> runs = new HashMap<>();
+	private Map<String, String> platforms = new HashMap<>();;
+	private Map<String, Set<String>> streams = new HashMap<>();
 
 	
 	public TestRunDetails() {
-		platforms = new HashMap<>();
+
 	}
 
 	public String getPlatform(String platform) {
 		return platforms.get(platform);
 	}
-
-	public void setPlatform(String platform, String name) {
-		this.platforms.put(platform, name);
-	}
-
-	/**
-	 * @return the runs
-	 */
-	public Set<String> getRunFieldNames(String runName) {
-		if(!runs.containsKey(runName))
-		{
-			return null;
-		}
-		Set<String> results = runs.get(runName).keySet();
-		return results;
-	}	
 	
-	/**
-	 * @return the runs
-	 */
-	public String getRunValue(String runName, String field) {
-		if(!runs.containsKey(runName))
-		{
-			return "";
-		}
-		Map<String, String> tempRun = runs.get(runName);
-		return tempRun.get(field);
+	public Set<String> getPlatformNames()
+	{
+		return this.platforms.keySet();
 	}
 
-	/**
-	 * @param runs the runs to set
-	 */
-	public void setRuns(String runName, String field, String value) {
-		
-		if(runs.containsKey(runName)){
-			Map<String, String> tempRun = runs.get(runName);
-			tempRun.put(field, value);
-			runs.remove(runName);
-			runs.put(runName, tempRun);
-		}
-		else
+	public void setPlatform(Map<String, String> platform) {
+		this.platforms = platform;
+	}
+
+	public void setStreams(Map<String, String> nodeValues) {
+		// TODO Auto-generated method stub
+		Set<String> solutions = new HashSet<String>();
+		Iterator<String> itr = nodeValues.keySet().iterator();
+		while(itr.hasNext())
 		{
-			Map<String, String> tempRun = new HashMap<>();
-			tempRun.put(field, value);
-			runs.put(runName, tempRun);
+			String streamName = itr.next();
+			String streamValues = nodeValues.get(streamName);
+			String values[] = streamValues.split(",");
+			solutions = new HashSet<String>(Arrays.asList(values)); 
+			streams.put(streamName, solutions);
 		}
 	}
 }

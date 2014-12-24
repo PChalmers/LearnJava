@@ -1,16 +1,16 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 public class configFileParser {
@@ -74,31 +74,31 @@ public class configFileParser {
 				//get the employee element
 				Element el = (Element)nl.item(i);
 				//get the Employee object
-				getPlatforms(el);
+				testdetails.setPlatform(getNodeValues(el));
 			}
 		}
 		
-		//get a nodelist of <streams> elements
+		//get a nodelist of <platforms> elements
 		nl = docEle.getElementsByTagName("streams");
 		if(nl != null && nl.getLength() > 0) {
 			for(int i = 0 ; i < nl.getLength();i++) {
 				//get the employee element
 				Element el = (Element)nl.item(i);
 				//get the Employee object
-				getPlatforms(el);
+				testdetails.setStreams(getNodeValues(el));
 			}
 		}
-		
-		//get a nodelist of <run> elements
-		nl = docEle.getElementsByTagName("run");
-		if(nl != null && nl.getLength() > 0) {
-			for(int i = 0 ; i < nl.getLength();i++) {
-				//get the employee element
-				Element el = (Element)nl.item(i);
-				//get the Employee object
-				getPlatforms(el);
-			}
-		}
+//		
+//		//get a nodelist of <run> elements
+//		nl = docEle.getElementsByTagName("run");
+//		if(nl != null && nl.getLength() > 0) {
+//			for(int i = 0 ; i < nl.getLength();i++) {
+//				//get the employee element
+//				Element el = (Element)nl.item(i);
+//				//get the Employee object
+//				getPlatforms(el);
+//			}
+//		}
 	}
 
 
@@ -108,22 +108,28 @@ public class configFileParser {
 	 * @param empEl
 	 * @return
 	 */
-	private void getPlatforms(Element empEl) {
+	private Map<String, String> getNodeValues(Element empEl) {
 		
+		Map<String, String> returnValue = new HashMap<String, String>();
 		//for each <employee> element get text or int values of 
 		//name ,id, age and name
-		String name = getTextValue(empEl,"Name");
-		int id = getIntValue(empEl,"Id");
-		int age = getIntValue(empEl,"Age");
-
-		String type = empEl.getAttribute("type");
-		
-		testdetails.setPlatform(platform, name);
-		
-		//Create a new Employee with the value read from the xml nodes
-		Employee e = new Employee(name,id,age,type);
-		
-		return e;
+		String platform = empEl.getTagName();
+		NodeList children = empEl.getChildNodes();
+		for(int i=0;i<children.getLength();i++)
+		{
+			Node child = children.item(i);
+			if(child instanceof Element)
+			{
+				Element childElement = (Element)child;
+				String node = childElement.getTagName();
+				System.out.println(node);
+				Text textNode = (Text) childElement.getFirstChild();
+				String value = textNode.getData().trim();
+				System.out.println(value);
+				returnValue.put(node, value);
+			}
+		}
+		return returnValue;
 	}
 
 
