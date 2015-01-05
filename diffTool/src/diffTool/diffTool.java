@@ -34,11 +34,14 @@ public class diffTool {
 	private Set<String> baselineFilenames = new HashSet<>();
 	private Set<String> runtimeFilenames = new HashSet<>();
 	private BufferedWriter logFileBufWrtr;
+	private int lineNumber = 0;
+	private String missingFiles = "";
 
 	public diffTool() {
 		FileWriter resultDesc;
 		try {
-			resultDesc = new FileWriter("results.log");
+			cleanUpTemDirs();
+			resultDesc = new FileWriter(OUTPUT_DIR + "results.log");
 			logFileBufWrtr = new BufferedWriter(resultDesc);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -63,11 +66,18 @@ public class diffTool {
 			// "results.log");
 			// BufferedWriter logFileBufWrtr = new BufferedWriter(resultDesc);
 
-			cleanUpTemDirs();
+//			cleanUpTemDirs();
 
 			File baseline_files = new File(BASELINE_DIR);
 			File runtime_files = new File(RUNTIME_DIR);
-
+			if(!baseline_files.exists())
+			{
+				throw new IOException("invalid folder path for baseline_files - " + BASELINE_DIR);
+			}
+			if(!runtime_files.exists())
+			{
+				throw new IOException("invalid folder path for runtime_files - " + RUNTIME_DIR);
+			}
 			baselineFilenames = listFilesForFolder(baseline_files);
 			runtimeFilenames = listFilesForFolder(runtime_files);
 
@@ -76,10 +86,8 @@ public class diffTool {
 			while (rtItr.hasNext()) {
 				String file = rtItr.next();
 				if (!baselineFilenames.contains(file)) {
-					System.out.println("** runtime file " + file
-							+ " does not exist in the baseline");
-					logFileBufWrtr.write("** runtime file " + file
-							+ " does not exist in the baseline\n");
+					missingFiles += "** runtime file " + file + " does not exist in the baseline\n";
+//					logMessage("** runtime file " + file + " does not exist in the baseline");
 				}
 			}
 
@@ -90,12 +98,11 @@ public class diffTool {
 				if (runtimeFilenames.contains(file)) {
 					compareFiles(BASELINE_DIR, RUNTIME_DIR, file);
 				} else {
-					System.out.println("** baseline file " + file
-							+ " does not exist in the runtime output");
-					logFileBufWrtr.write("** baseline file " + file
-							+ " does not exist in the runtime output\n");
+					missingFiles += "** runtime file " + file + " does not exist in the baseline\n";
+//					logMessage("** baseline file " + file + " does not exist in the runtime output");
 				}
 			}
+			logMessage("\n\n" + missingFiles);
 			logFileBufWrtr.close();
 
 		} catch (IOException e) {
@@ -111,8 +118,12 @@ public class diffTool {
 		deleteFolder(new File(RUNTIME_TEMP_DIR));
 		deleteFolder(new File(OUTPUT_DIR));
 
+		Boolean success = (new File(OUTPUT_DIR)).mkdirs();
+		if (!success) {
+			return false;
+		}
 		// Create temp folders
-		Boolean success = (new File(BASELINE_TEMP_DIR)).mkdirs();
+		success = (new File(BASELINE_TEMP_DIR)).mkdirs();
 		if (!success) {
 			return false;
 		}
@@ -120,10 +131,7 @@ public class diffTool {
 		if (!success) {
 			return false;
 		}
-		success = (new File(OUTPUT_DIR)).mkdirs();
-		if (!success) {
-			return false;
-		}
+		
 		return true;
 	}
 
@@ -147,55 +155,44 @@ public class diffTool {
 			String filename) {
 
 		try {
+			logMessage(++lineNumber + ": File - " + filename);
 
 			// Check if original files match
-			if (!CompareDataInFiles.compareData(OUTPUT_DIR, baselinePath,
-					runtimePath, filename)) {
-				List<String> file1List = extractFileContents(baselinePath
-						+ filename);
-				List<String> file2List = extractFileContents(runtimePath
-						+ filename);
+			if (!CompareDataInFiles.compareData(OUTPUT_DIR, baselinePath, runtimePath, filename)) {
+				List<String> file1List = extractFileContents(baselinePath + filename);
+				List<String> file2List = extractFileContents(runtimePath + filename);
 
 				// Sort the original files to check for matching content
 				if (createSortedTempFile(BASELINE_TEMP_DIR, filename, file1List)
 						&& createSortedTempFile(RUNTIME_TEMP_DIR, filename,
 								file2List)) {
-					System.out
-							.println("\n"
-									+ filename
-									+ " - Failed first content check. Checking for lines out of order");
-					logFileBufWrtr
-							.write("\n"
-									+ filename
-									+ " - Failed first content check. Checking for lines out of order");
+					logMessage("  - Failed first content check. Checking for lines out of order");
 
 					// Check if files with sorted content match
 					if (!CompareDataInFiles.compareData(OUTPUT_DIR,
 							BASELINE_TEMP_DIR, RUNTIME_TEMP_DIR, filename)) {
-						System.out.println("  - Content check failed for "
+						logMessage("  - Content check failed for "
 								+ BASELINE_TEMP_DIR + filename + " and "
-								+ RUNTIME_TEMP_DIR + filename + "\n");
-						logFileBufWrtr.write("  - Content check failed for "
-								+ BASELINE_TEMP_DIR + filename + " and "
-								+ RUNTIME_TEMP_DIR + filename + "\n");
+								+ RUNTIME_TEMP_DIR + filename);
 					} else {
-						System.out
-								.println("  - The contents of the sorted files match\n");
-						logFileBufWrtr
-								.write("  - The contents of the sorted files match\n");
+						logMessage("  - The contents of the sorted files match");
 					}
 				}
 			} else {
 				// // Original files match so done
-				System.out.println("The diff check of the original files "
-						+ filename + " passed");
-				logFileBufWrtr.write("The diff check of the original files "
-						+ filename + " passed");
+				logMessage("  - passed");
 			}
+//			System.out.println("");
+//			logFileBufWrtr.write("");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void logMessage(String message) throws IOException {
+		System.out.println(message);
+		logFileBufWrtr.write(message + "\n");
 	}
 
 	private Boolean createSortedTempFile(String path, String filename,
@@ -322,7 +319,9 @@ public class diffTool {
 			obj.run(outputDir, inputFile1, inputFile2);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println("Usage: ...");
+			System.out.println("Exception caught - " + e.getMessage());
+			e.printStackTrace();
+//			System.out.println("Usage: ...");
 		}
 
 	}
