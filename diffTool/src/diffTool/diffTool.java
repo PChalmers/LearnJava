@@ -8,9 +8,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.cli.CommandLine;
@@ -23,6 +25,7 @@ import org.apache.commons.cli.ParseException;
 
 public class diffTool {
 
+	private Boolean VERBOSE_STATE = false;
 	private String BASELINE_DIR = "";
 	private String RUNTIME_DIR = "";
 
@@ -37,39 +40,33 @@ public class diffTool {
 	private int lineNumber = 0;
 	private String missingFiles = "";
 
-	public diffTool() {
+	public diffTool(Boolean verbose, String outputDir) throws Exception {
 		FileWriter resultDesc;
 		try {
+			VERBOSE_STATE = verbose;
+			if(!outputDir.equals(""))
+			{
+				OUTPUT_DIR = fixPathEnding(outputDir);
+			}
+			
 			cleanUpTemDirs();
 			resultDesc = new FileWriter(OUTPUT_DIR + "results.log");
 			logFileBufWrtr = new BufferedWriter(resultDesc);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void run(String outputDir, String file1, String file2) {
+	public void run(String filePath1, String filePath2) {
 		
-		BASELINE_DIR = file1;
-		RUNTIME_DIR = file2;
-		if(!outputDir.equals(""))
-		{
-			OUTPUT_DIR = outputDir;
-			BASELINE_TEMP_DIR = OUTPUT_DIR + "temp_baseline/";
-			RUNTIME_TEMP_DIR = OUTPUT_DIR + "temp_runtime/";
-		}
-			
-		
-		try {
-			// FileWriter resultDesc = new FileWriter(OUTPUT_DIR +
-			// "results.log");
-			// BufferedWriter logFileBufWrtr = new BufferedWriter(resultDesc);
+		BASELINE_DIR = fixPathEnding(filePath1);
+		RUNTIME_DIR = fixPathEnding(filePath2);
 
-//			cleanUpTemDirs();
+		try {
 
 			File baseline_files = new File(BASELINE_DIR);
 			File runtime_files = new File(RUNTIME_DIR);
+			
 			if(!baseline_files.exists())
 			{
 				throw new IOException("invalid folder path for baseline_files - " + BASELINE_DIR);
@@ -78,61 +75,104 @@ public class diffTool {
 			{
 				throw new IOException("invalid folder path for runtime_files - " + RUNTIME_DIR);
 			}
-			baselineFilenames = listFilesForFolder(baseline_files);
-			runtimeFilenames = listFilesForFolder(runtime_files);
+			
+			Map<String, Set<String>> baselineNames = listFilesForFolder(BASELINE_DIR, baseline_files);
+			Map<String, Set<String>> runtimeNames = listFilesForFolder(RUNTIME_DIR, runtime_files);
 
-			// Check the baseline files against the runtime files
-			Iterator<String> rtItr = runtimeFilenames.iterator();
-			while (rtItr.hasNext()) {
-				String file = rtItr.next();
-				if (!baselineFilenames.contains(file)) {
-					missingFiles += "** runtime file " + file + " does not exist in the baseline\n";
-//					logMessage("** runtime file " + file + " does not exist in the baseline");
+			Iterator<String> baselineItr = baselineNames.keySet().iterator();
+			
+			while (baselineItr.hasNext()) {
+				
+				String baselineDir = baselineItr.next();
+				String currentBaselineDir = "";
+				String currentRuntimeDir = "";
+				
+				// Handle case where the root dir is the current dir being diffed
+				if(baselineDir.equals(BASELINE_DIR))
+				{
+					// Get the entry from the hashmap for the files in the main dir
+					baselineFilenames = baselineNames.get(BASELINE_DIR);
+					currentBaselineDir = BASELINE_DIR;
+					runtimeFilenames = runtimeNames.get(RUNTIME_DIR);
+					currentRuntimeDir = RUNTIME_DIR;
+					
 				}
-			}
+				else
+				{
+					if(runtimeNames.containsKey(baselineDir))
+					{
+						// Get the entry in the hashmap for the current dir
+						baselineFilenames = baselineNames.get(baselineDir);
+						currentBaselineDir = BASELINE_DIR + fixPathEnding(baselineDir);
+						runtimeFilenames = runtimeNames.get(baselineDir);
+						currentRuntimeDir = RUNTIME_DIR + fixPathEnding(baselineDir);
+					} else {
+						// Do not continue with this dir since it does not exist in both baseline and runtime
+					}
+				}
 
-			// Check the runtime files against the baseline files
-			Iterator<String> blItr = baselineFilenames.iterator();
-			while (blItr.hasNext()) {
-				String file = blItr.next();
-				if (runtimeFilenames.contains(file)) {
-					compareFiles(BASELINE_DIR, RUNTIME_DIR, file);
-				} else {
-					missingFiles += "** runtime file " + file + " does not exist in the baseline\n";
-//					logMessage("** baseline file " + file + " does not exist in the runtime output");
+				// Check the baseline files against the runtime files
+				Iterator<String> rtItr = runtimeFilenames.iterator();
+				while (rtItr.hasNext()) {
+					String file = rtItr.next();
+					if (!baselineFilenames.contains(file)) {
+						missingFiles += "** runtime file " + file
+								+ " does not exist in the baseline\n";
+					}
 				}
+				// Check the runtime files against the baseline files
+				Iterator<String> blItr = baselineFilenames.iterator();
+				while (blItr.hasNext()) {
+					String file = blItr.next();
+					if (runtimeFilenames.contains(file)) {
+						compareFiles(currentBaselineDir, currentRuntimeDir, file);
+					} else {
+						missingFiles += "** baseline file " + file
+								+ " does not exist in the runtime dir\n";
+					}
+				}
+				logMessage("\n\n" + missingFiles);
 			}
-			logMessage("\n\n" + missingFiles);
 			logFileBufWrtr.close();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	private Boolean cleanUpTemDirs() {
-
+	private void cleanUpTemDirs() throws Exception {
+		
+		BASELINE_TEMP_DIR = OUTPUT_DIR + "temp_baseline/";
+		RUNTIME_TEMP_DIR = OUTPUT_DIR + "temp_runtime/";
+		
 		// Remove the temp folders and previous content
 		deleteFolder(new File(BASELINE_TEMP_DIR));
 		deleteFolder(new File(RUNTIME_TEMP_DIR));
 		deleteFolder(new File(OUTPUT_DIR));
 
+		// Create new dirs
 		Boolean success = (new File(OUTPUT_DIR)).mkdirs();
 		if (!success) {
-			return false;
+			throw new Exception("Can not create Output dir - " + OUTPUT_DIR);
 		}
 		// Create temp folders
 		success = (new File(BASELINE_TEMP_DIR)).mkdirs();
 		if (!success) {
-			return false;
+			throw new Exception("Can not create Baseline dir - " + BASELINE_TEMP_DIR);
 		}
 		success = (new File(RUNTIME_TEMP_DIR)).mkdirs();
 		if (!success) {
-			return false;
+			throw new Exception("Can not create Runtime dir - " + RUNTIME_TEMP_DIR);
 		}
-		
-		return true;
+	}
+
+	private String fixPathEnding(String stringToFix) {
+		// Create new dir names
+		if(!stringToFix.endsWith("/"))
+		{
+			stringToFix = stringToFix += "/";
+		}
+		return stringToFix;
 	}
 
 	public void deleteFolder(File folder) {
@@ -155,37 +195,40 @@ public class diffTool {
 			String filename) {
 
 		try {
-			logMessage(++lineNumber + ": File - " + filename);
+			String currentFileStatus = "";
+			Boolean filePassed = false;
+			currentFileStatus += ++lineNumber + ": File - " + filename + "\n";
 
 			// Check if original files match
 			if (!CompareDataInFiles.compareData(OUTPUT_DIR, baselinePath, runtimePath, filename)) {
+				
+				currentFileStatus += "  - Failed first content check. Checking for lines out of order\n";
+
 				List<String> file1List = extractFileContents(baselinePath + filename);
 				List<String> file2List = extractFileContents(runtimePath + filename);
 
 				// Sort the original files to check for matching content
 				if (createSortedTempFile(BASELINE_TEMP_DIR, filename, file1List)
-						&& createSortedTempFile(RUNTIME_TEMP_DIR, filename,
-								file2List)) {
-					logMessage("  - Failed first content check. Checking for lines out of order");
+						&& createSortedTempFile(RUNTIME_TEMP_DIR, filename, file2List)) {
 
 					// Check if files with sorted content match
-					if (!CompareDataInFiles.compareData(OUTPUT_DIR,
-							BASELINE_TEMP_DIR, RUNTIME_TEMP_DIR, filename)) {
-						logMessage("  - Content check failed for "
-								+ BASELINE_TEMP_DIR + filename + " and "
-								+ RUNTIME_TEMP_DIR + filename);
+					if (!CompareDataInFiles.compareData(OUTPUT_DIR, BASELINE_TEMP_DIR, RUNTIME_TEMP_DIR, filename)) {
+						currentFileStatus += "  - Failed second check for sorted file contents\n";
 					} else {
-						logMessage("  - The contents of the sorted files match");
+						currentFileStatus += "  - Passed - The contents of the sorted files match\n";
 					}
+				}
+				else
+				{
+					currentFileStatus += "  - Failed sorting the files!\n";
 				}
 			} else {
 				// // Original files match so done
-				logMessage("  - passed");
+				filePassed = true;
+				currentFileStatus += "  - Passed diff check\n";
 			}
-//			System.out.println("");
-//			logFileBufWrtr.write("");
+			if(VERBOSE_STATE || !filePassed) logMessage(currentFileStatus);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -210,7 +253,6 @@ public class diffTool {
 			}
 			resultFileBufWrtr.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}
@@ -230,24 +272,35 @@ public class diffTool {
 		return lineList;
 	}
 
-	public Set<String> listFilesForFolder(final File folder) {
-		Set<String> filenames = new HashSet<>();
+	public Map<String, Set<String>> listFilesForFolder(String foldername, final File folder) {
+		Map<String, Set<String>> filenames = new HashMap<>();
+		Map<String, Set<String>> tempFilenames = new HashMap<>();
+		Set<String> files = new HashSet<>();
 		for (final File fileEntry : folder.listFiles()) {
 			if (fileEntry.isDirectory()) {
-				listFilesForFolder(fileEntry);
+				tempFilenames = listFilesForFolder(fileEntry.getName(), fileEntry);
+				Iterator<String> pathItr = tempFilenames.keySet().iterator();
+				while(pathItr.hasNext())
+				{
+					String nextPath = pathItr.next();
+					filenames.put(fixPathEnding(foldername) + fixPathEnding(nextPath), tempFilenames.get(nextPath));
+					}
+				filenames.putAll(tempFilenames);
 			} else {
-				filenames.add(fileEntry.getName());
+				files.add(fileEntry.getName());
+				filenames.put(foldername, files);
 			}
 		}
-
 		return filenames;
 	}
 
 	public static void main(String[] args) {
 
+		Boolean verbose = false;
 		String inputFile1 = "";
 		String inputFile2 = "";
 		String outputDir = "";
+		
 		// create the command line parser
 		CommandLineParser parser = new GnuParser();
 
@@ -255,7 +308,8 @@ public class diffTool {
 		Options options = new Options();
 
 		options.addOption("h", false, "display help");
-
+		options.addOption("v", false, "Verbose mode");
+		
 		OptionBuilder.withArgName("baselinefile");
 		OptionBuilder.hasArg();
 		OptionBuilder.withDescription("baseline dir");
@@ -278,30 +332,35 @@ public class diffTool {
 			// parse the command line arguments
 			CommandLine cmd = parser.parse(options, args);
 
+			// print the usage
 			if (cmd.hasOption("h")) {
-				// print the date and time
 				usage();
 			}
 			
-			// has the buildfile argument been passed?
+			// print the file diffs that passed as well as failed
+			if (cmd.hasOption("v")) {
+				verbose = true;
+			}
+			
+			// has the baseline files argument been passed?
 			if (cmd.hasOption("b")) {
 				// Initialize the member variable
 				inputFile1 = cmd.getOptionValue("b");
-				System.out.println("Baseline file = " + inputFile1);
+				System.out.println("Baseline files = " + inputFile1);
 			} else {
 				usage();
 			}
 
-			// has the build file argument been passed?
+			// has the runtime files argument been passed?
 			if (cmd.hasOption("r")) {
 				// Initialize the member variable
 				inputFile2 = cmd.getOptionValue("r");
-				System.out.println("Runtime file = " + inputFile2);
+				System.out.println("Runtime files = " + inputFile2);
 			} else {
 				usage();
 			}
 			
-			// has the build file argument been passed?
+			// has the output dir argument been passed?
 			if (cmd.hasOption("o")) {
 				// Initialize the member variable
 				outputDir = cmd.getOptionValue("o");
@@ -315,25 +374,23 @@ public class diffTool {
 
 		try {
 
-			diffTool obj = new diffTool();
-			obj.run(outputDir, inputFile1, inputFile2);
+			diffTool obj = new diffTool(verbose, outputDir);
+			obj.run(inputFile1, inputFile2);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			System.out.println("Exception caught - " + e.getMessage());
-			e.printStackTrace();
-//			System.out.println("Usage: ...");
-		}
 
+			System.out.println("Exception: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	private static void usage() {
-		// TODO Auto-generated method stub
 		
 		System.out.println("diffTool \n"
 				         + "-h help\n"
+				         + "-v Verbose          - default false\n"
 				         + "-b <baseline dir> \n"
-				         + "-r <runtime file> \n");
+				         + "-r <runtime file> \n"
+				         + "-o <output dirname> - default \"output\"\n");
 		System.exit(1);
 	}
-
 }
