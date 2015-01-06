@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -37,7 +38,7 @@ public class diffTool {
 	private Set<String> baselineFilenames = new HashSet<>();
 	private Set<String> runtimeFilenames = new HashSet<>();
 	private BufferedWriter logFileBufWrtr;
-	private int lineNumber = 0;
+	private int logFileLineNumber = 0;
 	private String missingFiles = "";
 
 	public diffTool(Boolean verbose, String outputDir) throws Exception {
@@ -46,7 +47,7 @@ public class diffTool {
 			VERBOSE_STATE = verbose;
 			if(!outputDir.equals(""))
 			{
-				OUTPUT_DIR = fixPathEnding(outputDir);
+				OUTPUT_DIR = fixPath(outputDir);
 			}
 			
 			cleanUpTemDirs();
@@ -59,8 +60,8 @@ public class diffTool {
 
 	public void run(String filePath1, String filePath2) {
 		
-		BASELINE_DIR = fixPathEnding(filePath1);
-		RUNTIME_DIR = fixPathEnding(filePath2);
+		BASELINE_DIR = fixPath(filePath1);
+		RUNTIME_DIR = fixPath(filePath2);
 
 		try {
 
@@ -77,31 +78,31 @@ public class diffTool {
 			}
 			
 			Map<String, Set<String>> baselineNames = listFilesForFolder(BASELINE_DIR, baseline_files);
-			Iterator<String> itr = baselineNames.keySet().iterator();
-			while(itr.hasNext())
-			{
-				String path = itr.next();
-				System.out.println(path);
-				Iterator<String> itr2 = baselineNames.get(path).iterator();
-				while(itr2.hasNext())
-				{
-					System.out.println(itr2.next());
-				}
-			}
+//			Iterator<String> itr = baselineNames.keySet().iterator();
+//			while(itr.hasNext())
+//			{
+//				String path = itr.next();
+//				System.out.println(path);
+//				Iterator<String> itr2 = baselineNames.get(path).iterator();
+//				while(itr2.hasNext())
+//				{
+//					System.out.println(itr2.next());
+//				}
+//			}
 			
 			
 			Map<String, Set<String>> runtimeNames = listFilesForFolder(RUNTIME_DIR, runtime_files);
-			itr = runtimeNames.keySet().iterator();
-			while(itr.hasNext())
-			{
-				String path = itr.next();
-				System.out.println(path);
-				Iterator<String> itr2 = runtimeNames.get(path).iterator();
-				while(itr2.hasNext())
-				{
-					System.out.println(itr2.next());
-				}
-			}
+//			itr = runtimeNames.keySet().iterator();
+//			while(itr.hasNext())
+//			{
+//				String path = itr.next();
+//				System.out.println(path);
+//				Iterator<String> itr2 = runtimeNames.get(path).iterator();
+//				while(itr2.hasNext())
+//				{
+//					System.out.println(itr2.next());
+//				}
+//			}
 			
 			Iterator<String> baselineItr = baselineNames.keySet().iterator();
 			// Iterate through the dirs found in the baseline
@@ -112,7 +113,7 @@ public class diffTool {
 				String currentRuntimeDir = "";
 				
 				// Handle case where the root dir is the current dir being diffed
-				if(fixPathEnding(baselineDir).equals(fixPathEnding(BASELINE_DIR)))
+				if(fixPath(baselineDir).equals(BASELINE_DIR))
 				{
 					// Get the entry from the hashmap for the files in the main dir
 					baselineFilenames = baselineNames.get(BASELINE_DIR);
@@ -123,16 +124,17 @@ public class diffTool {
 				}
 				else
 				{
-					String tempBaseline = removePrefix(fixPathEnding(BASELINE_DIR), fixPathEnding(baselineDir));
-					if(runtimeNames.containsKey(baselineDir))
+					String tempBaseline = removePrefix(BASELINE_DIR, baselineDir);
+					if(runtimeNames.containsKey(RUNTIME_DIR + tempBaseline))
 					{
 						// Get the entry in the hashmap for the current dir
 						baselineFilenames = baselineNames.get(baselineDir);
-						currentBaselineDir = BASELINE_DIR + fixPathEnding(baselineDir);
-						runtimeFilenames = runtimeNames.get(baselineDir);
-						currentRuntimeDir = RUNTIME_DIR + fixPathEnding(baselineDir);
+						currentBaselineDir = fixPath(baselineDir);
+						runtimeFilenames = runtimeNames.get(RUNTIME_DIR + tempBaseline);
+						currentRuntimeDir = fixPath(RUNTIME_DIR + tempBaseline);
 					} else {
 						// Do not continue with this dir since it does not exist in both baseline and runtime
+						System.out.println(baselineDir + " and " + RUNTIME_DIR + tempBaseline + " do not exist");
 					}
 				}
 
@@ -197,9 +199,9 @@ public class diffTool {
 	}
 	
 
-	private String fixPathEnding(String stringToFix) {
+	private String fixPath(String stringToFix) {
 		// Create new dir names
-		stringToFix.replace("\\", "/");
+		stringToFix = stringToFix.replaceAll("\\\\", "/");
 		if(!stringToFix.endsWith("/"))
 		{
 			stringToFix = stringToFix += "/";
@@ -229,7 +231,7 @@ public class diffTool {
 		try {
 			String currentFileStatus = "";
 			Boolean filePassed = false;
-			currentFileStatus += ++lineNumber + ": File - " + filename + "\n";
+			currentFileStatus += ++logFileLineNumber + ": File - " + filename + "\n";
 
 			// Check if original files match
 			if (!CompareDataInFiles.compareData(OUTPUT_DIR, baselinePath, runtimePath, filename)) {
@@ -317,14 +319,14 @@ public class diffTool {
 				while(pathItr.hasNext())
 				{
 					String nextPath = pathItr.next();
-					filenames.put(fixPathEnding(nextPath), tempFilenames.get(nextPath));
+					filenames.put(fixPath(nextPath), tempFilenames.get(nextPath));
 				}
 			} else {
 				String name = fileEntry.getName();
 				files.add(name);
 			}
 		}
-		filenames.put(fixPathEnding(foldername), files);
+		filenames.put(fixPath(foldername), files);
 		return filenames;
 	}
 
