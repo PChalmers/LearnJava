@@ -77,10 +77,34 @@ public class diffTool {
 			}
 			
 			Map<String, Set<String>> baselineNames = listFilesForFolder(BASELINE_DIR, baseline_files);
-			Map<String, Set<String>> runtimeNames = listFilesForFolder(RUNTIME_DIR, runtime_files);
-
-			Iterator<String> baselineItr = baselineNames.keySet().iterator();
+			Iterator<String> itr = baselineNames.keySet().iterator();
+			while(itr.hasNext())
+			{
+				String path = itr.next();
+				System.out.println(path);
+				Iterator<String> itr2 = baselineNames.get(path).iterator();
+				while(itr2.hasNext())
+				{
+					System.out.println(itr2.next());
+				}
+			}
 			
+			
+			Map<String, Set<String>> runtimeNames = listFilesForFolder(RUNTIME_DIR, runtime_files);
+			itr = runtimeNames.keySet().iterator();
+			while(itr.hasNext())
+			{
+				String path = itr.next();
+				System.out.println(path);
+				Iterator<String> itr2 = runtimeNames.get(path).iterator();
+				while(itr2.hasNext())
+				{
+					System.out.println(itr2.next());
+				}
+			}
+			
+			Iterator<String> baselineItr = baselineNames.keySet().iterator();
+			// Iterate through the dirs found in the baseline
 			while (baselineItr.hasNext()) {
 				
 				String baselineDir = baselineItr.next();
@@ -88,7 +112,7 @@ public class diffTool {
 				String currentRuntimeDir = "";
 				
 				// Handle case where the root dir is the current dir being diffed
-				if(baselineDir.equals(BASELINE_DIR))
+				if(fixPathEnding(baselineDir).equals(fixPathEnding(BASELINE_DIR)))
 				{
 					// Get the entry from the hashmap for the files in the main dir
 					baselineFilenames = baselineNames.get(BASELINE_DIR);
@@ -99,6 +123,7 @@ public class diffTool {
 				}
 				else
 				{
+					String tempBaseline = removePrefix(fixPathEnding(BASELINE_DIR), fixPathEnding(baselineDir));
 					if(runtimeNames.containsKey(baselineDir))
 					{
 						// Get the entry in the hashmap for the current dir
@@ -165,9 +190,16 @@ public class diffTool {
 			throw new Exception("Can not create Runtime dir - " + RUNTIME_TEMP_DIR);
 		}
 	}
+	
+	private String removePrefix(String prefix, String stringToUpdate)
+	{
+		return stringToUpdate.replace(prefix,"");
+	}
+	
 
 	private String fixPathEnding(String stringToFix) {
 		// Create new dir names
+		stringToFix.replace("\\", "/");
 		if(!stringToFix.endsWith("/"))
 		{
 			stringToFix = stringToFix += "/";
@@ -272,25 +304,27 @@ public class diffTool {
 		return lineList;
 	}
 
+	// Return a Map with the path and filenames for each dir and subdir at the path provided
 	public Map<String, Set<String>> listFilesForFolder(String foldername, final File folder) {
 		Map<String, Set<String>> filenames = new HashMap<>();
-		Map<String, Set<String>> tempFilenames = new HashMap<>();
 		Set<String> files = new HashSet<>();
+
 		for (final File fileEntry : folder.listFiles()) {
 			if (fileEntry.isDirectory()) {
-				tempFilenames = listFilesForFolder(fileEntry.getName(), fileEntry);
+				Map<String, Set<String>> tempFilenames = new HashMap<>();
+				tempFilenames = listFilesForFolder(fileEntry.getPath(), fileEntry);
 				Iterator<String> pathItr = tempFilenames.keySet().iterator();
 				while(pathItr.hasNext())
 				{
 					String nextPath = pathItr.next();
-					filenames.put(fixPathEnding(foldername) + fixPathEnding(nextPath), tempFilenames.get(nextPath));
-					}
-				filenames.putAll(tempFilenames);
+					filenames.put(fixPathEnding(nextPath), tempFilenames.get(nextPath));
+				}
 			} else {
-				files.add(fileEntry.getName());
-				filenames.put(foldername, files);
+				String name = fileEntry.getName();
+				files.add(name);
 			}
 		}
+		filenames.put(fixPathEnding(foldername), files);
 		return filenames;
 	}
 
