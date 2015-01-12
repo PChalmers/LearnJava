@@ -34,8 +34,8 @@ public class diffTool {
 	private String RUNTIME_TEMP_DIR = OUTPUT_DIR + "temp_runtime/";
 
 
-	private Set<String> baselineFilenames = new HashSet<>();
-	private Set<String> runtimeFilenames = new HashSet<>();
+	private Set<String> baselineFilenames = new HashSet<String>();
+	private Set<String> runtimeFilenames = new HashSet<String>();
 	private BufferedWriter logFileBufWrtr;
 	private int logFileLineNumber = 0;
 	private String missingFiles = "";
@@ -307,12 +307,12 @@ public class diffTool {
 
 	// Return a Map with the path and filenames for each dir and subdir at the path provided
 	public Map<String, Set<String>> listFilesForFolder(String foldername, final File folder) {
-		Map<String, Set<String>> filenames = new HashMap<>();
-		Set<String> files = new HashSet<>();
+		Map<String, Set<String>> filenames = new HashMap<String, Set<String>>();
+		Set<String> files = new HashSet<String>();
 
 		for (final File fileEntry : folder.listFiles()) {
 			if (fileEntry.isDirectory()) {
-				Map<String, Set<String>> tempFilenames = new HashMap<>();
+				Map<String, Set<String>> tempFilenames = new HashMap<String, Set<String>>();
 				tempFilenames = listFilesForFolder(fileEntry.getPath(), fileEntry);
 				Iterator<String> pathItr = tempFilenames.keySet().iterator();
 				while(pathItr.hasNext())
